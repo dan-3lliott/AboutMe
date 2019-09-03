@@ -9,11 +9,44 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
+import javax.imageio.*;
+import java.io.*;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JSlider;
+import javax.swing.JCheckBox;
+import java.util.ArrayList;
 
 class Surface extends JPanel {
-
+    private void swingComponents() {
+        this.setLayout(null);
+        JSlider slider = new JSlider(JSlider.HORIZONTAL, 1, 10, 7);
+        slider.setMinorTickSpacing(1);
+        slider.setMajorTickSpacing(5);
+        slider.setPaintTicks(true);
+        slider.setPaintLabels(true);
+        slider.setLabelTable(slider.createStandardLabels(1));
+        slider.setBounds(70, 770, slider.getPreferredSize().width, slider.getPreferredSize().height);
+        this.add(slider);
+        ArrayList<JCheckBox> boxes = new ArrayList<JCheckBox>();
+        boxes.add(new JCheckBox("<html>I WOULD RUN FOR <br/>PRESIDENT", false));
+        boxes.get(boxes.size() - 1).setBounds(355, 450, boxes.get(boxes.size() - 1).getPreferredSize().width, boxes.get(boxes.size() - 1).getPreferredSize().height);
+        boxes.add(new JCheckBox("I'M LEFT HANDED", false));
+        boxes.get(boxes.size() - 1).setBounds(355, 485, boxes.get(boxes.size() - 1).getPreferredSize().width, boxes.get(boxes.size() - 1).getPreferredSize().height);
+        boxes.add(new JCheckBox("I'M A MORNING PERSON", false));
+        boxes.get(boxes.size() - 1).setBounds(355, 505, boxes.get(boxes.size() - 1).getPreferredSize().width, boxes.get(boxes.size() - 1).getPreferredSize().height);
+        boxes.add(new JCheckBox("<html>I'M SECRETLY A <br/>SUPERHERO", false));
+        boxes.get(boxes.size() - 1).setBounds(355, 525, boxes.get(boxes.size() - 1).getPreferredSize().width, boxes.get(boxes.size() - 1).getPreferredSize().height);
+        boxes.add(new JCheckBox("<html>I HAVE A FEAR OF <br/>PUBLIC SPEAKING", false));
+        boxes.get(boxes.size() - 1).setBounds(355, 560, boxes.get(boxes.size() - 1).getPreferredSize().width, boxes.get(boxes.size() - 1).getPreferredSize().height);
+        boxes.add(new JCheckBox("I LOVE PIZZA", true));
+        boxes.get(boxes.size() - 1).setBounds(355, 595, boxes.get(boxes.size() - 1).getPreferredSize().width, boxes.get(boxes.size() - 1).getPreferredSize().height);
+        for (JCheckBox b : boxes) {
+            this.add(b);
+        }
+        
+    }
     private void doDrawing(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         g2d.drawRect(50, 45, 700, 800); //entire rectangle
@@ -29,12 +62,13 @@ class Surface extends JPanel {
         g2d.drawLine(50, 425, 350, 650); //first diagonal line
         g2d.drawLine(50, 650, 350, 425); //second diagonal line
         g2d.drawLine(300, 650, 350, 845); //separating diagonal line
-        g2d.drawLine(50, 795, 337, 795); //last horizontal line interesecting with diagonal
-        g2d.drawLine(650, 650, 650, 845); //last lower vertical separating line
+        g2d.drawLine(50, 750, 326, 750); //last horizontal line interesecting with diagonal
+        g2d.drawLine(635, 650, 635, 845); //last lower vertical separating line
         g2d.drawOval(525, 425, 225, 225); //most important circle
         g2d.setColor(this.getBackground());
         g2d.fillRect(637, 426, 112, 112); //clear out upper right hand corner of circle
         g2d.setColor(Color.BLACK);
+        g2d.drawString("ABOUT ME", 375, 40);
         g2d.drawString("DEFAULT DOODLE", 54, 60);
         g2d.drawString("NAME (FIRST AND LAST): DANIEL ELLIOTT", 505, 65);
         g2d.drawString("JOB I WOULD NEVER HAVE: BUSINESSMAN", 415, 95);
@@ -59,6 +93,24 @@ class Surface extends JPanel {
         g2d.drawString("AND SKIING", 608, 550);
         g2d.drawString("EXTRACURRICULARS I AM INVOLVED IN:", 54, 666);
         g2d.drawString("TSA, VEX, SCIENCE FAIR, RESEARCH", 54, 681);
+        g2d.drawString("WHAT HAS HELPED ME SUCCEED", 380, 666);
+        g2d.drawString("ACADEMICALLY IN PREVIOUS CLASSES IS:", 355, 681);
+        g2d.drawString("FREEDOM IN TERMS OF CURRICULUM, ", 365, 740);
+        g2d.drawString("WITH A RELEVANT WORKLOAD", 385, 755);
+        g2d.drawString("MY HOMEWORK", 646, 666);
+        g2d.drawString("SOUNDTRACK IS:", 642, 681);
+        g2d.drawString("WHATEVER'S IN", 645, 726);
+        g2d.drawString("MY SOUNDCLOUD", 642, 741);
+        g2d.drawString("LIKES AT THE", 650, 756);
+        g2d.drawString("MOMENT", 666, 771);
+        g2d.drawString("1-10, HOW EXCITED I AM FOR THIS CLASS", 54, 840);
+        try {
+            Image doodles = ImageIO.read(new File("doodles.jpg"));
+            g2d.drawImage(doodles, 60, 70, 230, 260, this);
+        }
+        catch (IOException e) {
+            System.out.println("IO exception caught");
+        }   
     }
 
     @Override
@@ -66,13 +118,13 @@ class Surface extends JPanel {
 
         super.paintComponent(g);
         doDrawing(g);
+        swingComponents();
     }
 }
 
 public class Main extends JFrame {
 
     public Main() {
-
         initUI();
     }
 
